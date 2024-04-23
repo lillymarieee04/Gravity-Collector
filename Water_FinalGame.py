@@ -4,28 +4,27 @@ import random
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((30, 30))  # Blue box
-        self.image.fill((0, 0, 255))  # Blue color
+        self.image = pygame.Surface((30, 30))
+        self.image.fill((0, 0, 255)) 
         self.rect = self.image.get_rect()
-        self.rect.center = (320, 50)  # Initial position at the top
-        self.speed = 0.2  # Initial speed
-        self.dx = 0  # Horizontal velocity
-        self.dy = 0  # Vertical velocity
+        self.rect.center = (320, 50) 
+        self.speed = 0.2  
+        self.dx = 0  
+        self.dy = 0  
 
     def update(self):
         self.rect.x += self.dx
         self.rect.y += self.dy
-        # Apply gravity
         self.dy += 0.05
 
 class Square(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((20, 20))  # Yellow box
-        self.image.fill((255, 255, 0))  # Yellow color
+        self.image = pygame.Surface((20, 20))  
+        self.image.fill((255, 255, 0)) 
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(50, 590)  # Random horizontal position
-        self.rect.y = random.randint(50, 350)  # Random vertical position
+        self.rect.x = random.randint(50, 590)  
+        self.rect.y = random.randint(50, 350)  
 
 class Game:
     def __init__(self):
@@ -35,7 +34,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.player = Player()
         self.squares = pygame.sprite.Group()
-        for _ in range(5):  # Create 5 squares
+        for _ in range(5): 
             square = Square()
             self.squares.add(square)
         self.game_over = False
@@ -69,14 +68,13 @@ class Game:
         # Check collisions with squares
         collisions = pygame.sprite.spritecollide(self.player, self.squares, True)
         if collisions:
-            self.player.rect.center = (320, 50)  # Reset player position
-            self.player.dy = 0  # Reset vertical velocity
-            self.player.speed += 0.5  # Increase player speed
-            if len(self.squares) == 0:  # If all squares collected
+            self.player.rect.center = (320, 50)  
+            self.player.dy = 0 
+            self.player.speed += 0.5  
+            if len(self.squares) == 0: 
                 self.won = True
                 self.game_over = True
 
-        # Check if player hits the bottom
         if self.player.rect.bottom >= 480:
             self.game_over = True
 
